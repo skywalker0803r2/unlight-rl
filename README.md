@@ -1,62 +1,54 @@
 # Unlight RL MVP
 
-A lightweight turn-based duel game and RL prototype inspired by Unlight, designed for CPU-only execution in GitHub Codespaces and local development.
+A browser-playable RL card duel prototype inspired by Unlight, built for fast local testing and CPU-friendly experimentation in Codespaces.
 
-This repository now includes:
+This project includes:
 
-- A playable browser-based duel page at the root route
-- A simplified duel engine with HP, distance, and round flow
-- Gymnasium environment and action-masking scaffold
-- Rule-based baseline AI and PPO trainer wrapper
-- Rich terminal CLI as a fallback game mode
-- FastAPI endpoints for health/state checks
+- A playable HTML duel interface at the root route
+- Turn-based combat with HP, distance, and round tracking
+- Card-based actions: Move, Sword, Gun, Special
+- Two skill actions: Thunderbolt and Precision Shot
+- Gymnasium-style environment scaffold for RL development
+- Baseline AI and PPO training wrapper structure
+- FastAPI health/state endpoints
 
-## Features
+## What’s Included
 
-- 1v1 mini duel gameplay
-- Basic card types: Move, Sword, Gun, Special
-- Skill checks: Thunderbolt and Precision Shot
-- Simple action mask compatible with RL training
-- Minimal CPU-friendly architecture for fast local testing
+- Browser duel page with buttons and turn flow
+- Simple enemy AI response loop
+- Card count tracking and hand display
+- Action gating to model valid moves
+- Minimal RL-ready environment for future training iteration
 
-## Live Game
-
-Run the app:
+## How to Run
 
 ```bash
 cd /workspaces/unlight-rl
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Open in browser:
+Then open:
 
 ```text
 http://localhost:8000/
 ```
 
-The homepage contains a playable HTML mini-game where you can:
+You will see a playable mini duel page where you can:
 
 - move forward/backward
 - attack
-- use skills
+- use special skills
 - defend
-- pass
+- pass the turn
 
 ## API Endpoints
 
-- GET / : playable game page
-- GET /health : health check
-- GET /state : environment observation snapshot
-- POST /step : step the RL environment with an action
+- GET / : playable browser game page
+- GET /health : returns server health state
+- GET /state : returns the RL observation state
+- POST /step : sends an action to the environment
 
-Example:
-
-```bash
-curl http://localhost:8000/health
-curl http://localhost:8000/state
-```
-
-## Repository Structure
+## Project Structure
 
 ```text
 .
@@ -82,12 +74,13 @@ curl http://localhost:8000/state
 ├── tests/
 │   └── test_core.py
 ├── Unlight_RL_AI_MVP_PRD.pdf
-└── .gitignore
+├── .gitignore
+└── .venv/
 ```
 
 ## Quick Start
 
-### 1) Create a virtual environment
+### 1) Create environment
 
 ```bash
 python -m venv .venv
@@ -100,7 +93,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3) Run the game server
+### 3) Start the game
 
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8000
@@ -114,10 +107,10 @@ python -m pytest -q
 
 ## Notes
 
-- This is an MVP for rapid prototyping, not a full commercial card game.
-- The design follows the provided PRD and intentionally keeps CPU usage low.
-- The environment is suitable for iterative RL experimentation and UI validation.
+- This is a lean MVP for fast iteration.
+- It is built to align with the PRD while remaining lightweight enough for local CPU-only experimentation.
+- It is intentionally modular so the logic can be expanded into deeper card effects, richer AI, and full RL training later.
 
 ## License
 
-For internal prototype and learning use.
+For internal prototype and educational/demo use.
