@@ -1,19 +1,60 @@
-# Unlight RL AI MVP
+# Unlight RL MVP
 
-A lean Reinforcement Learning card-duel MVP inspired by Unlight, built for fast CPU-only execution in GitHub Codespaces.
+A lightweight turn-based duel game and RL prototype inspired by Unlight, designed for CPU-only execution in GitHub Codespaces and local development.
 
-This project includes:
+This repository now includes:
 
-- A simplified turn-based 1v1 duel engine
-- Gymnasium environment integration
-- Action-masked PPO training scaffolding
-- Rule-based baseline bot
-- Rich terminal CLI
-- FastAPI health and state endpoints
+- A playable browser-based duel page at the root route
+- A simplified duel engine with HP, distance, and round flow
+- Gymnasium environment and action-masking scaffold
+- Rule-based baseline AI and PPO trainer wrapper
+- Rich terminal CLI as a fallback game mode
+- FastAPI endpoints for health/state checks
 
-## Project Goals
+## Features
 
-This repository follows the PRD in Unlight_RL_AI_MVP_PRD.pdf and focuses on a minimal but runnable MVP with a small footprint suitable for CPU training and local experimentation.
+- 1v1 mini duel gameplay
+- Basic card types: Move, Sword, Gun, Special
+- Skill checks: Thunderbolt and Precision Shot
+- Simple action mask compatible with RL training
+- Minimal CPU-friendly architecture for fast local testing
+
+## Live Game
+
+Run the app:
+
+```bash
+cd /workspaces/unlight-rl
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+Open in browser:
+
+```text
+http://localhost:8000/
+```
+
+The homepage contains a playable HTML mini-game where you can:
+
+- move forward/backward
+- attack
+- use skills
+- defend
+- pass
+
+## API Endpoints
+
+- GET / : playable game page
+- GET /health : health check
+- GET /state : environment observation snapshot
+- POST /step : step the RL environment with an action
+
+Example:
+
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/state
+```
 
 ## Repository Structure
 
@@ -40,12 +81,13 @@ This repository follows the PRD in Unlight_RL_AI_MVP_PRD.pdf and focuses on a mi
 │   └── cli.py
 ├── tests/
 │   └── test_core.py
-└── Unlight_RL_AI_MVP_PRD.pdf
+├── Unlight_RL_AI_MVP_PRD.pdf
+└── .gitignore
 ```
 
 ## Quick Start
 
-### 1) Create and activate a Python environment
+### 1) Create a virtual environment
 
 ```bash
 python -m venv .venv
@@ -58,31 +100,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3) Run the CLI demo
-
-```bash
-python main.py
-```
-
-### 4) Run the API locally
+### 3) Run the game server
 
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Then open:
-
-- http://localhost:8000/health
-- http://localhost:8000/state
-
-## Sample API
-
-```bash
-curl http://localhost:8000/health
-curl http://localhost:8000/state
-```
-
-## Testing
+### 4) Run tests
 
 ```bash
 python -m pytest -q
@@ -90,10 +114,10 @@ python -m pytest -q
 
 ## Notes
 
-- Training is intentionally lightweight for CPU-only Codespace usage.
-- The environment exposes a simple action mask for fast PPO-compatible training.
-- The project is intentionally a design-first MVP and can be extended with deeper duel logic, richer card effects, and stronger self-play training.
+- This is an MVP for rapid prototyping, not a full commercial card game.
+- The design follows the provided PRD and intentionally keeps CPU usage low.
+- The environment is suitable for iterative RL experimentation and UI validation.
 
 ## License
 
-This project is intended for internal MVP development and experimentation.
+For internal prototype and learning use.
